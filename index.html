@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍽️ La Belle Cuisine Menu ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --pink: #FF69B4;
+            --dark-pink: #DB7093;
+            --light-pink: #FFF0F5;
+            --gold: #FFD700;
+            --dark: #4A2C40;
+            --light: #FFF9FB;
+            --accent: #FF1493;
+            --text: #5E3A4D;
+            --bg: #121212;
+            --container-bg: rgba(30, 30, 30, 0.95);
+            --text-color: var(--light);
+            --secondary: rgba(141, 110, 99, 0.8);
+        }
+
+        /* Light Mode Variables */
+        .light-mode {
+            --bg: #FFF9FB;
+            --container-bg: rgba(255, 255, 255, 0.95);
+            --text-color: #5E3A4D;
+            --light: #5E3A4D;
+            --dark: #FFF9FB;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-color);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: var(--container-bg);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            padding: 3rem;
+            border: 2px solid var(--accent);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .menu-container::before {
+            content: "🍽️ ✨ 🍷";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--accent);
+            opacity: 0.3;
+        }
+
+        .menu-border {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 20px;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 20px,
+                var(--accent) 20px,
+                var(--accent) 40px
+            );
+        }
+
+        .menu-border.left {
+            left: 0;
+            border-right: 1px solid var(--accent);
+        }
+
+        .menu-border.right {
+            right: 0;
+            border-left: 1px solid var(--accent);
+        }
+
+        .menu-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .restaurant-name h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 5rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 0.5rem;
+        }
+
+        .restaurant-name h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--accent);
+            margin-top: -1rem;
+            letter-spacing: 5px;
+            font-weight: 300;
+        }
+
+        .header-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+
+        .divider-line {
+            height: 2px;
+            width: 100px;
+            background: linear-gradient(to right, transparent, var(--accent), transparent);
+        }
+
+        .divider-icon {
+            margin: 0 1rem;
+            color: var(--accent);
+            font-size: 1.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        .menu-date {
+            font-style: italic;
+            letter-spacing: 1px;
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        .menu-nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            padding: 0.8rem 2rem;
+            color: var(--light);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            border-radius: 50px;
+            background: rgba(141, 110, 99, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: rgba(141, 110, 99, 0.4);
+        }
+
+        .nav-btn.active {
+            color: white;
+            background: var(--secondary);
+            box-shadow: 0 4px 15px rgba(141, 110, 99, 0.4);
+        }
+
+        .nav-btn.active::after {
+            content: '✨';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .menu-section {
+            display: none;
+            margin-bottom: 3rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .menu-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--gold);
+            margin-bottom: 2rem;
+            text-align: center;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0 2rem;
+        }
+
+        .section-title::before, .section-title::after {
+            content: '✨';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.7;
+        }
+
+        .section-title::before {
+            left: 0;
+        }
+
+        .section-title::after {
+            right: 0;
+        }
+
+        .menu-item {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed rgba(215, 204, 200, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .menu-item:hover {
+            transform: translateX(10px);
+        }
+
+        .menu-item:hover::before {
+            content: '✨';
+            position: absolute;
+            left: -30px;
+            top: 0;
+            color: var(--accent);
+        }
+
+        .item-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .price-dots {
+            flex: 1;
+            border-bottom: 1px dotted var(--accent);
+            margin: 0 1rem;
+            transform: translateY(-3px);
+        }
+
+        .item-price {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .item-description {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            line-height: 1.7;
+            padding-left: 1rem;
+            border-left: 2px solid var(--secondary);
+        }
+
+        .order-btn {
+            background-color: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 0.7rem 2rem;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            float: right;
+            border-radius: 50px;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-btn:hover {
+            background-color: var(--secondary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(141, 110, 99, 0.4);
+        }
+
+        .order-btn::after {
+            content: '➕';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .order-btn:hover::after {
+            right: 15px;
+            opacity: 1;
+        }
+
+        .order-summary {
+            position: fixed;
+            right: 2rem;
+            top: 2rem;
+            width: 300px;
+            background-color: var(--container-bg);
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--accent);
+            border-radius: 15px;
+            z-index: 100;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed var(--accent);
+        }
+
+        .order-header h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+        }
+
+        .item-count {
+            color: var(--accent);
+            font-weight: 700;
+            background: rgba(141, 110, 99, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 50px;
+        }
+
+        .order-items {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed rgba(215, 204, 200, 0.2);
+        }
+
+        .order-item-name {
+            flex: 1;
+        }
+
+        .order-item-price {
+            font-weight: 600;
+        }
+
+        .remove-item {
+            color: var(--accent);
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--accent);
+        }
+
+        .total-amount {
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(to right, var(--accent), var(--dark-pink));
+            color: white;
+            border: none;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .checkout-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Payment Section */
+        .payment-section {
+            display: none;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--container-bg);
+            border-radius: 15px;
+            border: 2px solid var(--accent);
+        }
+
+        .payment-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .payment-method {
+            flex: 1;
+            min-width: 120px;
+            padding: 1rem;
+            border: 2px solid var(--accent);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            background: rgba(255, 20, 147, 0.1);
+        }
+
+        .payment-method.active {
+            background: rgba(255, 20, 147, 0.2);
+            border-color: var(--gold);
+        }
+
+        .payment-method i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .payment-form {
+            margin-top: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--accent);
+            border-radius: 5px;
+            background: var(--container-bg);
+            color: var(--text-color);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .pay-now-btn {
+            width: 100%;
+            background: linear-gradient(to right, var(--accent), var(--dark-pink));
+            color: white;
+            border: none;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .pay-now-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Theme and Language Toggles */
+        .settings-toggles {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .toggle-btn {
+            background: var(--container-bg);
+            border: 2px solid var(--accent);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+        }
+
+        .toggle-btn i {
+            font-size: 1rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: var(--container-bg);
+            margin-top: 3rem;
+            border-radius: 15px;
+            border: 2px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-section::before {
+            content: "✨ 📞 ✉️";
+            position: absolute;
+            top: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--accent);
+            opacity: 0.2;
+        }
+
+        .gold-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            max-width: 300px;
+        }
+
+        .gold-divider .line {
+            height: 2px;
+            flex: 1;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .gold-divider i {
+            color: var(--accent);
+            margin: 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-subtitle {
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            font-style: italic;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+        }
+
+        /* Contact Buttons */
+        .contact-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-btn {
+            position: relative;
+            display: flex;
+            background: var(--container-bg);
+            border-radius: 15px;
+            text-decoration: none;
+            width: 100%;
+            max-width: 350px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+        }
+
+        .btn-content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            z-index: 2;
+        }
+
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+            background: rgba(141, 110, 99, 0.2);
+            color: var(--accent);
+        }
+
+        .btn-text {
+            text-align: left;
+            flex: 1;
+        }
+
+        .btn-label {
+            display: block;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-detail {
+            display: block;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        /* Hover Effects */
+        .contact-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .contact-btn:hover .icon-circle {
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Order Notification */
+        #orderNotification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.4s ease-out;
+            font-weight: 600;
+        }
+
+        #orderNotification i {
+            font-size: 1.5rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .notification-visible {
+            transform: translateX(0) !important;
+        }
+
+        /* Payment Confirmation */
+        #paymentConfirmation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--container-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            display: none;
+        }
+
+        #paymentConfirmation h3 {
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        #paymentConfirmation p {
+            margin-bottom: 1.5rem;
+        }
+
+        #paymentConfirmation .confirmation-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: none;
+        }
+
+        /* Delivery Message */
+        .delivery-message {
+            font-size: 0.9rem;
+            color: var(--gold);
+            font-style: italic;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .delivery-message i {
+            color: var(--accent);
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: 1.2rem;
+            color: rgba(215, 204, 200, 0.3);
+            animation: float-up 10s linear infinite;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .order-summary {
+                position: static;
+                width: 100%;
+                margin-top: 2rem;
+            }
+            
+            .menu-container {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .restaurant-name h1 {
+                font-size: 3.5rem;
+            }
+            
+            .restaurant-name h2 {
+                font-size: 1.5rem;
+                letter-spacing: 3px;
+            }
+            
+            .menu-nav {
+                flex-wrap: wrap;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .payment-methods {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .restaurant-name h1 {
+                font-size: 2.8rem;
+            }
+
+            .item-name {
+                font-size: 1.3rem;
+            }
+
+            .item-price {
+                font-size: 1.1rem;
+            }
+
+            .order-btn {
+                padding: 0.5rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .settings-toggles {
+                top: 10px;
+                right: 10px;
+                flex-direction: column;
+
+                #orderNotification {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--accent);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    transform: translateX(150%);
+    transition: transform 0.4s ease-out;
+    font-weight: 600;
+}
+
+.notification-visible {
+    transform: translateX(0) !important;
+}
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="floating-elements" id="elements-container"></div>
+    
+    <!-- Theme/Language Toggles -->
+    <div class="settings-toggles">
+        <button id="themeToggle" class="toggle-btn">
+            <i class="fas fa-moon"></i> Dark
+        </button>
+        <button id="languageToggle" class="toggle-btn">
+            <i class="fas fa-language"></i> EN
+        </button>
+    </div>
+
+    <div class="menu-container">
+        <div class="menu-border left"></div>
+        <div class="menu-border right"></div>
+        
+        <div class="menu-header">
+            <div class="restaurant-name">
+                <h1>La Belle Cuisine</h1>
+                <h2>FINE DINING EXPERIENCE</h2>
+            </div>
+            
+            <div class="header-divider">
+                <div class="divider-line"></div>
+                <div class="divider-icon">✨</div>
+                <div class="divider-line"></div>
+            </div>
+            
+            <div class="menu-date">Seasonal Menu • 2024 • Open 11AM-10PM</div>
+        </div>
+        
+        <div class="menu-nav">
+            <button class="nav-btn active" data-section="starters">🍤 Starters</button>
+            <button class="nav-btn" data-section="mains">🍲 Main Courses</button>
+            <button class="nav-btn" data-section="desserts">🍰 Desserts</button>
+            <button class="nav-btn" data-section="drinks">🍹 Drinks</button>
+        </div>
+        
+        <div class="menu-section active" id="starters">
+            <h3 class="section-title">Starters</h3>
+            
+            <div class="menu-item">
+                <div class="item-header">
+                    <div class="item-name">🍤 Camarão Alho</div>
+                    <div class="price-dots"></div>
+                    <div class="item-price">450 MZN</div>
+                </div>
+                <div class="item-description">
+                    Succulent garlic prawns sautéed in olive oil, garlic, and chili flakes, served with crusty bread.
+                </div>
+                <div class="delivery-message">
+                    <i class="fas fa-clock"></i> Ready in 15 min • 🚀 Delivery available
+                </div>
+                <button class="order-btn" data-name="Camarão Alho" data-price="450">Add to Order</button>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-header">
+                    <div class="item-name">🥑 Avocado Bruschetta</div>
+                    <div class="price-dots"></div>
+                    <div class="item-price">350 MZN</div>
+                </div>
+                <div class="item-description">
+                    Toasted bread topped with mashed avocado, cherry tomatoes, red onion, and balsamic glaze.
+                </div>
+                <div class="delivery-message">
+                    <i class="fas fa-clock"></i> Ready in 10 min • 🚀 Delivery available
+                </div>
+                <button class="order-btn" data-name="Avocado Bruschetta" data-price="350">Add to Order</button>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-header">
+                    <div class="item-name">🍄 Mushroom Soup</div>
+                    <div class="price-dots"></div>
+                    <div class="item-price">300 MZN</div>
+                </div>
+                <div class="item-description">
+                    Creamy wild mushroom soup with a touch of truffle oil and fresh herbs.
+                </div>
+                <div class="delivery-message">
+                    <i class="fas fa-clock"></i> Ready in 12 min • 🚀 Delivery available
+                </div>
+                <button class="order-btn" data-name="Mushroom Soup" data-price="300">Add to Order</button>
+            </div>
+        </div>
+        
+        <div class="menu-section" id="mains">
+            <h3 class="section-title">Main Courses</h3>
+            
+            <div class="menu-item">
+                <div class="item-header">
+                    <div class="item-name">🥩 Frango à Cafreal</div>
+                    <div class="price-dots"></div>
+                    <div class="item-price">650 MZN</div>
+                </div>
+                <div class="item-description">
+                    Spicy Goan-style chicken marinated in green masala, served with fries or rice.
+                </div>
+                <div class="delivery-message">
+                    <i class="fas fa-clock"></i> Ready in 25 min • 🚀 Delivery available
+                </div>
+                <button class="order-btn" data-name="Frango à Cafreal" data-price="650">Add to Order</button>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-header">
+                    <div class="item-name">🐟 Peixe Grelhado</div>
+                    <div class="price-dots"></div>
+                    <div class="item-price">750 MZN</div>
+                </div>
+                <div class="item-description">
+                    Fresh local fish grilled to perfection with lemon butter sauce, served with vegetables and mashed potatoes.
+                </div>
+                <div class="delivery-message">
+                    <i class="fas fa-clock"></i> Ready in 20 min • 🚀 Delivery available
+                </div>
+                <button class="order-btn" data-name="Peixe Grelhado" data-price="750">Add to Order</button>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-header">
+                    <div class="item-name">🍝 Espaguete à Bolonhesa</div>
+                    <div class="price-dots"></div>
+                    <div class="item-price">550 MZN</div>
+                </div>
+                <div class="item-description">
+                    Classic spaghetti with rich beef bolognese sauce and parmesan cheese.
+                </div>
+                <div class="delivery-message">
+                    <i class="fas fa-clock"></i> Ready in 18 min • 🚀 Delivery available
+                </div>
+                <button class="order-btn" data-name="Espaguete à Bolonhesa" data-price="550">Add to Order</button>
+            </div>
+        </div>
+        
+        <div class="menu-section" id="desserts">
+            <h3 class="section-title">Desserts</h3>
+            
+            <div class="menu-item">
+                <div class="item-header">
+                    <div class="item-name">🍫 Chocolate Mousse</div>
+                    <div class="price-dots"></div>
+                    <div class="item-price">300 MZN</div>
+                </div>
+                <div class="item-description">
+                    Rich dark chocolate mousse with whipped cream and fresh berries.
+                </div>
+                <div class="delivery-message">
+                    <i class="fas fa-clock"></i> Ready in 5 min • 🚀 Delivery available
+                </div>
+                <button class="order-btn" data-name="Chocolate Mousse" data-price="300">Add to Order</button>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-header">
+                    <div class="item-name">🍮 Pudim de Leite</div>
+                    <div class="price-dots"></div>
+                    <div class="item-price">250 MZN</div>
+                </div>
+                <div class="item-description">
+                    Traditional Mozambican milk pudding with caramel sauce.
+                </div>
+                <div class="delivery-message">
+                    <i class="fas fa-clock"></i> Ready in 5 min • 🚀 Delivery available
+                </div>
+                <button class="order-btn" data-name="Pudim de Leite" data-price="250">Add to Order</button>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-header">
+                    <div class="item-name">🍍 Ananás Assado</div>
+                    <div class="price-dots"></div>
+                    <div class="item-price">280 MZN</div>
+                </div>
+                <div class="item-description">
+                    Grilled pineapple with cinnamon and coconut ice cream.
+                </div>
+                <div class="delivery-message">
+                    <i class="fas fa-clock"></i> Ready in 8 min • 🚀 Delivery available
+                </div>
+                <button class="order-btn" data-name="Ananás Assado" data-price="280">Add to Order</button>
+            </div>
+        </div>
+        
+        <div class="menu-section" id="drinks">
+            <h3 class="section-title">Drinks</h3>
+            
+            <div class="menu-item">
+                <div class="item-header">
+                    <div class="item-name">🍹 Cocktails</div>
+                    <div class="price-dots"></div>
+                    <div class="item-price">350-450 MZN</div>
+                </div>
+                <div class="item-description">
+                    Try our R&R Special (rum, raspberry, lime) or Tropical Sunset (vodka, mango, passionfruit).
+                </div>
+                <div class="delivery-message">
+                    <i class="fas fa-clock"></i> Ready in 7 min • 🚀 Delivery available
+                </div>
+                <button class="order-btn" data-name="Cocktails" data-price="400">Add to Order</button>
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-header">
+                    <div class="item-name">🍷 Wine Selection</div>
+                    <div class="price-dots"></div>
+                    <div class="item-price">400-600 MZN</div>
+                </div>
+                <div class="item-description">
+                    Selection of South African and Portuguese wines by the glass or bottle.
+                </div>
+                <div class="delivery-message">
+                    <i class="fas fa-clock"></i> Ready in 5 min • 🚀 Delivery available
+                </div>
+                <button class="order-btn" data-name="Wine Selection" data-price="500">Add to Order</button>
+                
+            </div>
+            
+            <div class="menu-item">
+                <div class="item-header">
+                    <div class="item-name">🍹 Non-Alcoholic</div>
+                    <div class="price-dots"></div>
+                    <div class="item-price">150-250 MZN</div>
+                </div>
+                <div class="item-description">
+                    Fresh juices (mango, passionfruit, pineapple), iced teas, and artisanal sodas.
+                </div>
+                <div class="delivery-message">
+                    <i class="fas fa-clock"></i> Ready in 3 min • 🚀 Delivery available
+                </div>
+                <button class="order-btn" data-name="Item Name" data-price="100">Add to Order</button>
+            </div>
+            
+        
+        
+        <div class="contact-section">
+            <div class="gold-divider">
+                <div class="line"></div>
+                <i class="fas fa-heart"></i>
+                <div class="line"></div>
+            </div>
+            
+            <h3 class="section-title">Contact Us</h3>
+            <p class="contact-subtitle">We'd love to hear from you! ✨</p>
+            
+            <div class="contact-buttons">
+                <a href="tel:+258842094211" class="contact-btn call-btn">
+                    <div class="btn-content">
+                        <div class="icon-circle">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="btn-text">
+                            <span class="btn-label">Call Us</span>
+                            <span class="btn-detail">+258 84 209 4211</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="mailto:chissicocamira1@gmail.com" class="contact-btn email-btn">
+                    <div class="btn-content">
+                        <div class="icon-circle">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="btn-text">
+                            <span class="btn-label">Email Us</span>
+                            <span class="btn-detail">chissicocamira1@gmail.com</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="settings-toggles">
+        <button id="themeToggle" class="toggle-btn">
+            <i class="fas fa-moon"></i> Dark
+        </button>
+        <button id="languageToggle" class="toggle-btn">
+            <i class="fas fa-language"></i> EN
+        </button>
+    </div>
+
+    <!-- (Your existing HTML remains the same until the order-summary div) -->
+
+    <div class="order-summary">
+        <div class="order-header">
+            <h3>Your Order</h3>
+            <span class="item-count">0 items</span>
+        </div>
+        <div class="order-items" id="orderItems">
+            <!-- Order items will be added here -->
+        </div>
+        <div class="order-total">
+            <span>Total:</span>
+            <span class="total-amount">0 MZN</span>
+        </div>
+        <button class="checkout-btn" id="checkoutBtn">Checkout 💖</button>
+    </div>
+
+    <!-- Payment Section (Hidden by default) -->
+    <div class="payment-section" id="paymentSection">
+        <h3 class="section-title">Payment Method</h3>
+        
+        <div class="payment-methods">
+            <div class="payment-method" data-method="mpesa">
+                <i class="fas fa-mobile-alt"></i>
+                <div>Mpesa</div>
+            </div>
+            <div class="payment-method" data-method="emola">
+                <i class="fas fa-wallet"></i>
+                <div>Emola</div>
+            </div>
+            <div class="payment-method" data-method="card">
+                <i class="far fa-credit-card"></i>
+                <div>Card</div>
+            </div>
+        </div>
+
+        <div class="payment-form" id="cardForm">
+            <div class="form-group">
+                <label for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+            </div>
+            <div class="form-group">
+                <label for="cardName">Cardholder Name</label>
+                <input type="text" id="cardName" value="Yasser Vilanculos">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="expiryDate">Expiry Date</label>
+                    <input type="text" id="expiryDate" placeholder="MM/YY">
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" placeholder="123">
+                </div>
+            </div>
+            <button class="pay-now-btn">Pay Now</button>
+        </div>
+
+        <div class="payment-form" id="mpesaForm" style="display: none;">
+            <p>You will receive an Mpesa prompt on your phone to complete payment.</p>
+            <button class="pay-now-btn">Pay with Mpesa</button>
+        </div>
+
+        <div class="payment-form" id="emolaForm" style="display: none;">
+            <p>You will be redirected to Emola to complete your payment.</p>
+            <button class="pay-now-btn">Pay with Emola</button>
+        </div>
+    </div>
+
+    <!-- (Rest of your existing HTML remains the same) -->
+
+    <script>
+        // ===== CART FUNCTIONALITY =====
+        let orderItems = [];
+    
+        // Function to add item to cart
+        function addToCart(itemName, itemPrice) {
+            orderItems.push({ name: itemName, price: itemPrice });
+            updateOrderSummary();
+            showNotification(`${itemName} added to cart!`);
+        }
+    
+        // Function to remove item from cart
+        function removeFromCart(index) {
+            const removedItem = orderItems.splice(index, 1)[0];
+            updateOrderSummary();
+            showNotification(`${removedItem.name} removed from cart`);
+        }
+    
+        // Function to update the order summary
+        function updateOrderSummary() {
+            const orderItemsContainer = document.getElementById('orderItems');
+            const itemCountElement = document.querySelector('.item-count');
+            const totalAmountElement = document.querySelector('.total-amount');
+    
+            // Clear current items
+            orderItemsContainer.innerHTML = '';
+    
+            // Add each item to the summary
+            orderItems.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'order-item';
+                itemElement.innerHTML = `
+                    <span class="order-item-name">${item.name}</span>
+                    <span class="order-item-price">${item.price} MZN</span>
+                    <button class="remove-item" data-index="${index}">✕</button>
+                `;
+                orderItemsContainer.appendChild(itemElement);
+            });
+    
+            // Update item count
+            itemCountElement.textContent = `${orderItems.length} ${orderItems.length === 1 ? 'item' : 'items'}`;
+    
+            // Calculate and update total
+            const total = orderItems.reduce((sum, item) => sum + parseInt(item.price), 0);
+            totalAmountElement.textContent = `${total} MZN`;
+        }
+    
+        // Function to show notification
+        function showNotification(message) {
+            const notification = document.getElementById('orderNotification');
+            if (!notification) {
+                const newNotification = document.createElement('div');
+                newNotification.id = 'orderNotification';
+                newNotification.innerHTML = `<i class="fas fa-shopping-cart"></i> ${message}`;
+                document.body.appendChild(newNotification);
+                setTimeout(() => {
+                    newNotification.classList.add('notification-visible');
+                }, 10);
+                setTimeout(() => {
+                    newNotification.classList.remove('notification-visible');
+                    setTimeout(() => {
+                        newNotification.remove();
+                    }, 400);
+                }, 3000);
+            }
+        }
+    
+        // Event delegation for order buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle add to cart button clicks
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('order-btn')) {
+                    const itemName = e.target.getAttribute('data-name');
+                    const itemPrice = e.target.getAttribute('data-price');
+                    if (itemName && itemPrice) {
+                        addToCart(itemName, itemPrice);
+                    }
+                }
+    
+                // Handle remove item button clicks
+                if (e.target.classList.contains('remove-item')) {
+                    const index = e.target.getAttribute('data-index');
+                    removeFromCart(index);
+                }
+            });
+    
+            // Menu navigation
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const sectionId = button.getAttribute('data-section');
+                    
+                    // Update active button
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    // Update active section
+                    document.querySelectorAll('.menu-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    document.getElementById(sectionId).classList.add('active');
+                });
+            });
+    
+            // Theme Toggle
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                const isLight = document.body.classList.contains('light-mode');
+                themeToggle.innerHTML = `<i class="fas ${isLight ? 'fa-sun' : 'fa-moon'}"></i> ${isLight ? 'Light' : 'Dark'}`;
+            });
+    
+            // Language Toggle (English/Portuguese)
+            const languageToggle = document.getElementById('languageToggle');
+            languageToggle.addEventListener('click', () => {
+                const isEnglish = languageToggle.textContent.includes('EN');
+                languageToggle.innerHTML = `<i class="fas fa-language"></i> ${isEnglish ? 'PT' : 'EN'}`;
+                // You would add language translation logic here
+                alert(`Language set to ${isEnglish ? 'Portuguese' : 'English'}`);
+            });
+    
+            // Payment Methods
+            const paymentMethods = document.querySelectorAll('.payment-method');
+            paymentMethods.forEach(method => {
+                method.addEventListener('click', () => {
+                    paymentMethods.forEach(m => m.classList.remove('active'));
+                    method.classList.add('active');
+                    
+                    // Show the selected payment form
+                    document.querySelectorAll('.payment-form').forEach(form => {
+                        form.style.display = 'none';
+                    });
+                    const methodType = method.getAttribute('data-method');
+                    document.getElementById(`${methodType}Form`).style.display = 'block';
+                });
+            });
+    
+            // Checkout Button
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const paymentSection = document.getElementById('paymentSection');
+            checkoutBtn.addEventListener('click', () => {
+                if (orderItems.length === 0) {
+                    alert('Your order is empty!');
+                    return;
+                }
+                paymentSection.classList.add('active');
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth'
+                });
+            });
+    
+            // Create floating elements
+            const elementsContainer = document.getElementById('elements-container');
+            const emojis = ['🍽️', '✨', '🍷', '🍤', '🥑', '🍄', '🥩', '🐟', '🍝', '🍫', '🍮', '🍍', '🍹'];
+            for (let i = 0; i < 15; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.animationDuration = `${10 + Math.random() * 20}s`;
+                element.style.animationDelay = `${Math.random() * 5}s`;
+                elementsContainer.appendChild(element);
+            }
+        });
+    </script>
